@@ -1,0 +1,15 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+	<h1>Склады</h1>
+	<hr>
+	{% for store in stores %}
+	<div>	
+		<p><b><a href="{{ url_for('client', id=store.id) }}">Склад №{{ store.code }}</a></b></p>
+		<p><i>+7 {{ store.phone }}</i></p>
+		<!-- заменить функцией модуля -->
+		<p>Заполненность: <i>{{ round(store.free_place/store.load_place*100, 2) }}</i></p> 
+		<hr>
+	</div>
+	{% endfor %}
+{% endblock %}

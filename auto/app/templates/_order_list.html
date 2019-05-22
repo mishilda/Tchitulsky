@@ -1,0 +1,18 @@
+﻿<table>    	
+	<tr valign="top">
+		<td>Номер рейса</td>
+		<td>Компания</td>
+		<td>Дата заказа</td>
+		<td>Дата доставки</td>
+		<td>Статус</td>
+	</tr>
+	{% for order in orders %}
+	<tr valign="top">
+		<td><a href="{{ url_for('order', id=order.orders.id) }}">{{ order.orders.id }}<a></td>
+		<td>{{ order.clients.name }}</td>
+		<td>{{ order.orders.date_from }}</td>
+		<td>{{ order.orders.date_to }}</td>
+		<td>{{ order.orders.status }}</td> 
+	</tr>
+	{% endfor %}
+</table>

@@ -1,0 +1,45 @@
+﻿{% extends "base.html" %}
+{% block content %}
+	<h1>{{ driver.name }}</h1>
+	<table>
+		<tr valign="top">
+			<td>
+				<p>Водительская лицензия:</p>
+				<p>Автомобиль:</p>
+				<p>Телефон:</p>
+			</td>
+			<td>
+				<p>{{ driver.licence }}</p>
+				<p>{{ driver.car }}</p>
+				<p>+7 {{ driver.phone }}</p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td>
+				<p>Возраст:</p>
+				<p>Медицинская лицензия:</p>
+				<p>Срок истечения:</p>
+			</td>
+			<td> 
+				<p>{{ driver.age }}</p>
+				<p>{{ driver.med_licence }}</p>
+				<p>{{ driver.med_licence_date }}</p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td>
+				<p>ИНН:</p>
+				<p>Адрес:</p>
+			</td>
+			<td>
+				<p>{{ driver.inn }}</p>
+				<p>{{ driver.addr }}</p>
+			</td>
+		</tr>
+	</table>
+	<table style="position:absolute; right:0px;">
+		<tr valign="top">
+			<td>stat menu</td>
+		</tr>
+	</table>
+{% endblock %}

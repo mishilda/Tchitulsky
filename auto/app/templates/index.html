@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+	{% if current_user.is_anonymous %}
+	<h1>Пожалуйста, авторизируйтесь в системе для работы!</h1>
+	{% else %}
+	<h1>Добро пожаловать, {{ current_user.name }}!</h1>
+	<h2>Хорошего рабочего дня!</h2>
+	
+
+	{% include '_order_list.html' %}
+	{% endif %}
+	
+
+{% endblock %}
+
+
+		

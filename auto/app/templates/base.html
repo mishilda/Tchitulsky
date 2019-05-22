@@ -1,0 +1,41 @@
+﻿<html>
+	<head>
+		{% if title %}
+		<title>{{ title }}</title>
+		{% else %}
+		<title>Грузоперевозки</title>
+		{% endif %}
+	</head>
+	<body>
+		<div>
+			<a href="{{ url_for('index') }}">Главная</a>
+			{% if current_user.is_anonymous %}
+			<a href="{{ url_for('login') }}">Вход</a>
+			{% else %}
+			<a href="{{ url_for('logout') }}">Выйти</a>
+			{% endif %}
+		</div>
+		<hr>
+		{% if current_user.is_authenticated %}
+		<div>
+			Меню:
+			<a href="{{ url_for('clients') }}">Клиенты</a>
+			<a href="{{ url_for('drivers') }}">Водители</a>
+			<a href="{{ url_for('stores') }}">Склады</a>
+			<a href="{{ url_for('new_order') }}">Создать перевозку</a>
+		</div>		
+		<hr>
+		{% endif %}
+
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+		<ul>
+			{% for message in messages %}
+			<li> {{ message }} </li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+		{% endwith %}
+		{% block content %}{% endblock %}
+	</body>
+</html>

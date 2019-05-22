@@ -1,0 +1,47 @@
+﻿{% extends "base.html" %}
+{% block content %}
+
+	<h1>{{ client.name }}</h1>
+	<table style="position:absolute; left:20px;">
+		<tr valign="top">
+			<td>
+				<p>Страна: </p>
+				<p>Город: </p>
+				<p>Адрес: </p>
+				<p>Телефон: </p>
+				<p>e-mail: </p>
+				<p>Факс: </p>
+			</td>
+			<td>
+				<p>{{ client.country }}</p>
+				<p>{{ client.city }}</p>
+				<p>{{ client.addr }}</p>
+				<p>{{ client.phone }}</p>
+				<p>{{ client.email }}</p>
+				<p>{{ client.fax }}</p>
+			<td>		
+		</tr>
+	</table>
+	<table style="position:absolute; left:400px;">
+		<tr valign="top">
+			<td>	
+				<h2>{{ client.contact_person_name }}</h2>
+				<h4><i>Контактное лицо</i></h4>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td>	
+				<p>Телефон: </p>
+				<p>E-mail: </p>
+			</td>
+			<td>
+				<p>+7 {{ client.contact_person_phone }}</p>
+				<p>{{ client.contact_person_email }}</p>
+		</tr>
+  	</table>		
+	<table style="position:absolute; right:0px;">
+		<tr valign="top">
+			<td>Тут будут кнопки</td>
+		</tr>
+	</table>
+{% endblock %}

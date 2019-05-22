@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+	<h1>Создание заказа</h1>
+	<form action="" method="post">
+		{{ form.hidden_tag() }}
+		<p>
+			{{ form.client.label }}<br>
+			{{ form.client(size=32) }}
+			{% for error in form.client.errors %}
+			<span style="color:red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.driver.label }}<br>
+			{{ form.driver(size=32) }}
+			{% for error in form.driver.errors %}
+			<span style="color:red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.store.label }}<br>
+			{{ form.store(size=32) }}
+			{% for error in form.store.errors %}
+			<span style="color:red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.date_to.label }}<br>
+			{{ form.date_to(size=32) }}
+			{% for error in form.date_to.errors %}
+			<span style="color:red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.size.label }}<br>
+			{{ form.size(size=32) }}
+			{% for error in form.size.errors %}
+			<span style="color:red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.weight.label }}<br>
+			{{ form.weight(size=32) }}
+			{% for error in form.weight.errors %}
+			<span style="color:red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.cost.label }}<br>
+			{{ form.cost(size=32) }}
+			{% for error in form.cost.errors %}
+			<span style="color:red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>{{ form.submit() }}</p>
+	</form>
+{% endblock %}

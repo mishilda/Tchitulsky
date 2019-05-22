@@ -1,0 +1,15 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+	<h1>Клиенты</h1>
+	<hr>
+	{% for client in clients %}
+	<div>
+		<p><b><a href="{{ url_for('client', id=client.id) }}">{{ client.name }}</a></b></p>
+		<p>+7 {{ client.phone }}</p>
+		<p><i>{{ client.email }}</i></p>
+		<p>{{ client.country }}, {{ client.city }}</p>
+		<hr> 
+	</div>
+	{% endfor %}
+{% endblock %}

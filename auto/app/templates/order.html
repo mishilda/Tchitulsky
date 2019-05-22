@@ -1,0 +1,54 @@
+﻿{% extends "base.html" %}
+{% block content %}
+	<h1>Рейс №{{ order.orders.id }}</h1>
+	<table>
+		<tr valign="top">
+			<td>
+				<p>Клиент:</p>
+			        <p>Водитель:</p>
+				<p>Склад:</p>
+			</td>
+			<td>
+				<p>{{ order.clients.name }}</p>
+				<p>{{ order.drivers.name }}</p>
+				<p>{{ order.stores.code }}</p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td>
+				<p>Дата поступления заказа:</p>
+				<p>Дата доставки:</p>
+			</td>
+			<td>
+				<p>{{ order.orders.date_from }}</p>
+				<p>{{ order.orders.date_to }}</p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td>
+				<p>Адрес доставки:<p>
+				<p>Адрес склада:</p>
+			</td>
+			<td>
+				<p>{{ order.orders.addr_from }}</p>
+				<p>{{ order.orders.addr_to }}</p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td>
+				<p>Количество контейнеров:</p>
+				<p>Вес:</p>
+				<p>Стоимость перевозки:</p>
+			</td>
+			<td>
+				<p>{{ order.orders.size }}<p>
+				<p>{{ order.orders.weight }}</p>
+				<p>{{ order.orders.cost }}</p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td><p>Статус:</p></td>
+			<td><p>{{ order.orders.status }}</p></td>
+		</tr>
+	</table>
+{% endblock %}

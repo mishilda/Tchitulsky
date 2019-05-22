@@ -1,0 +1,13 @@
+﻿{% extends "base.html" %}
+	
+{% block content %}
+	<h1>Водители</h1>
+	<hr>
+	{% for driver in drivers %}
+	<div>
+		<p><<b><a href="{{ url_for('driver', id=driver.id) }}">{{ driver.name }}</a></b></p>
+		<p>+7 {{ driver.phone }}</p>
+		<hr>
+	</div>
+	{% endfor %}
+{% endblock %}

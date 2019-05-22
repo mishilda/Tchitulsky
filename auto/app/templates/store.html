@@ -1,0 +1,16 @@
+﻿{% extends "base.html" %}
+{% block content %}
+	<h1>{{ store.code }}</h1>
+	<table>
+		<tr valign="top">
+			<td><p>+7 {{ store.phone }}</p></td>
+		</tr>
+		<tr valign="top">
+			<td><p>{{ store.addr }}</p></td>
+		</tr>
+		<tr valign="top">
+			<td><p>Место на складе:</p></td>
+			<td><p>{{ store.load_place }}/{{ store.free_place }}
+		</tr>
+	</table>
+{% endblock %}	
