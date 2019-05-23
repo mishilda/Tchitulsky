@@ -50,5 +50,10 @@
 			<td><p>Статус:</p></td>
 			<td><p>{{ order.orders.status }}</p></td>
 		</tr>
+		{% if order.orders.status == 'Обработка' %}
+		<tr valign="top">
+			<td><a href="{{ url_for('edit_order', id=order.orders.id) }}">Редактировать</a></td>
+		</tr>
+		{% endif %}
 	</table>
 {% endblock %}

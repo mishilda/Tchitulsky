@@ -37,7 +37,10 @@ class UserLogic():
 		
 	def ordersObj(self):
 		Obj = []
-		for order in self.orders:
+		for order in self.orders:	
+			order_obj = OrderLogic(order.id)
+			if order_obj.not_full():
+				order_obj.set_status('Обработка')
 			Obj.append(OrderLogic(order.id))
 		return Obj	
 		 	
@@ -61,24 +64,43 @@ class StoreLogic():
 		if id is None:
 			self.stores = Store.query.all()
 		else:
-			self.stores = Store.query.filter_by(id=id)			
+			self.stores = Store.query.filter_by(id=id).first()			
 
 class OrderLogic():
 	
 	def __init__(self, id=None):
 		if id is None:
 			self.orders = Order.query.all()
+			self.new = True
 		else:
 			self.orders = Order.query.filter_by(id=id).first()
 			self.clients = ClientLogic(id=self.orders.client_id).clients
 			self.drivers = DriverLogic(id=self.orders.driver_id).drivers
 			self.stores = StoreLogic(id=self.orders.store_id).stores
+			self.new = False
 
-	def save(client, driver, store, date_to, size, weigth, cost):
-		order = Order(client_id=client.id, driver_id=driver.id, store_id=store.id, addr_from=store.addr, addr_to=client.addr, date_from=datetime.utcnow(), date_to=date_to, size=size, weight=weight, cost=cost, status='Ожидает')
-		db.session.add(order)
-		db.session.commit()
-		return True	
+	def save(self, client, driver, store, date_to, size, weight, cost):
+		self.clients = ClientLogic(client).clients
+		self.drivers = DriverLogic(driver).drivers
+		self.stores = StoreLogic(store).stores
+		data = [self.clients.id, self.drivers.id, self.stores.id, self.stores.addr, self.clients.addr, datetime.utcnow(), date_to, size, weight, cost,'Ожидает']
+		if self.new == True:
+			order = Order().insert(data)
+		else:
+			self.orders.update(data)
+		return True
+		
+	def not_full(self):
+		if self.clients == None or self.drivers == None or self.stores == None:
+			return True
+		order = self.orders
+		if order.addr_from == None or order.addr_to == None or order.date_from == None or order.date_to == None or order.size == None or order.weight == None or order.cost == None or order.status == None:
+			return True
+		return False
+	
+	def set_status(self, status):
+		data = [self.orders.client_id, self.orders.driver_id, self.orders.store_id, self.orders.addr_from, self.orders.addr_to, self.orders.date_from, self.orders.date_to, self.orders.size, self.orders.weight, self.orders.cost, status]
+		self.orders.update(data)
 
 
 

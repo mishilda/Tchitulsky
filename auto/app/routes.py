@@ -14,7 +14,6 @@ def index():
 	orders=[]
 	if current_user.is_authenticated:
 		orders = UserLogic(current_user.id).ordersObj()
-		print(orders)
 	return render_template('index.html', orders=orders)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -78,31 +77,39 @@ def order(id):
 @app.route('/new_order', methods=['GET', 'POST'])
 @login_required
 def new_order():
-	clients = UserLogic(current_user.id).clients
-	drivers = DriverLogic().drivers
-	stores = StoreLogic().stores
-	print(clients, drivers, stores)
-	clients_list=[]
-	i=0
-	for client in clients:
-		clients_list.append((i, client))
-		i+=1
-	drivers_list=[]
-	i=0
-	for deiver in drivers:
-		drivers_list.append((i, driver))
-		i+=1
-	stores_list=[]
-	i=0
-	for store in stores:
-		stores_list.append((i, store))
-		i+=1
 	form = MakeOrderForm()
-	form.client.choices=list(clients_list)
-	form.driver.choices=list(drivers_list)
-	form.store.choices=list(stores_list)
+	form.client.choices=[(client.id, client.name) for client in UserLogic(current_user.id).clients]
+	form.driver.choices=[(driver.id, driver.name) for driver in DriverLogic().drivers]
+	form.store.choices=[(store.id, store.code) for store in StoreLogic().stores]
 	if form.validate_on_submit():
-		if OrderLogic().save(form.client.date, form.driver.data, form.store.data, form.date_to.data, form.size.data, form.weight.data, form.cost.data):
+		if OrderLogic().save(form.client.data, form.driver.data, form.store.data, form.date_to.data, form.size.data, form.weight.data, form.cost.data):
 			flash('Заказ сохранен.')
 			return redirect(url_for('index'))
-	return render_template('makeorder.html', title='Создать заказ', form=form)	
+	return render_template('makeorder.html', title='Создать заказ', form=form)
+
+@app.route('/edit_order/<id>', methods=['GET', 'POST'])
+@login_required
+def edit_order(id):
+	form = MakeOrderForm()                                                               
+	form.client.choices=[(client.id, client.name) for client in UserLogic(current_user.id).clients]
+	form.driver.choices = [(driver.id, driver.name) for driver in DriverLogic().drivers]
+	form.store.choices = [(store.id, store.code) for store in StoreLogic().stores]
+	
+	order = OrderLogic(id)
+	if form.validate_on_submit():	
+		if order.save(form.client.data, form.driver.data, form.store.data, form.date_to.data, form.size.data, form.weight.data, form.cost.data):
+			flash('Заказ изменен успешно!')
+			return redirect(url_for('index'))
+	elif request.method == 'GET':
+		if type(order.clients) is not type([]):
+			form.client.data = order.clients.id
+		if type(order.drivers) is not type([]):
+			form.driver.data = order.drivers.id
+		if type(order.stores) is not type([]):
+			print(order.stores)
+			form.store.data = order.stores.id
+		form.date_to.data = order.orders.date_to
+		form.weight.data = order.orders.weight
+		form.size.data = order.orders.size
+		form.cost.data = order.orders.cost 
+	return render_template('edit_order.html', title='Редактировать заказ', form=form, order=order)

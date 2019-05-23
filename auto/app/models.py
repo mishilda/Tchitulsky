@@ -84,3 +84,26 @@ class Order(db.Model):
 
 	def __repr__(self):
 		return '<Order {}>'.format(self.id)
+
+	def fill(self, data):
+		print(data)
+		self.client_id=data[0]
+		self.driver_id=data[1]
+		self.stores_id=data[2]
+		self.addr_from=data[3]
+		self.addr_to=data[4]
+		self.date_from=data[5]
+		self.date_to=data[6]
+		self.size=data[7]
+		self.weight=data[8]
+		self.cost=data[9]
+		self.status=data[10]
+
+	def insert(self, data):
+		self.fill(data)
+		db.session.add(self)
+		db.session.commit()
+
+	def update(self, data):
+		self.fill(data)
+		db.session.commit()
